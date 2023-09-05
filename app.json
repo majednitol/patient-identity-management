@@ -1,4 +1,16 @@
 {
   "name": "reactnativestarter",
-  "displayName": "React Native Starter"
+  "displayName": "React Native Starter",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "d2a9c5fb-c438-4dd6-b3c2-33bb3aa4026e"
+      }
+    }
+  },
+  "android": {
+    "permissions": [
+      "READ_EXTERNAL_STORAGE"
+    ]
+  }
 }

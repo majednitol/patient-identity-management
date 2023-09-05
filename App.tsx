@@ -1,55 +1,87 @@
 import {
-  ConnectWallet,
   localWallet,
   metamaskWallet,
   rainbowWallet,
+  coinbaseWallet,
   ThirdwebProvider,
+  trustWallet,
 } from '@thirdweb-dev/react-native';
+
+import { Sepolia } from '@thirdweb-dev/chains';
+import { useColorScheme } from 'react-native';
+import { useTheme } from 'react-native-paper';
+
 import React from 'react';
-import {StyleSheet, Text, useColorScheme, View} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {TW_CLIENT_ID} from '@env';
 
-const App = () => {
+import HomeScreen from './Screen/HomeScreen';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import SplashScreen from './Screen/Splash Screen/SplashScreen';
+
+import NotConnected from './Screen/NotConnected';
+import PrimaryScreen from './Screen/signup/PrimaryScreen';
+
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import ALLUserDataProvider from './context/AllUserData';
+import { client_id } from './constant';
+
+
+const Stack = createStackNavigator();
+
+export default function App() {
+  const scheme = useColorScheme();
+  const theme = useTheme();
+
   return (
-    <ThirdwebProvider
-      activeChain="mumbai"
-      // clientId={TW_CLIENT_ID} // uncomment this line after you set your clientId in the .env file
-      supportedWallets={[metamaskWallet(), rainbowWallet(), localWallet()]}>
-      <AppInner />
-    </ThirdwebProvider>
+    <GestureHandlerRootView
+      style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <ThirdwebProvider
+        clientId={client_id}
+        
+        
+        activeChain={Sepolia}
+        supportedWallets={[
+          metamaskWallet(),
+          rainbowWallet(),
+          coinbaseWallet(),
+          localWallet(),
+          trustWallet(),
+        ]}>
+        <ALLUserDataProvider>
+          <NavigationContainer
+            theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack.Navigator initialRouteName="Splash">
+              <Stack.Screen
+                name="Splash"
+                component={SplashScreen}
+                options={{ headerShown: false }}
+              />
+
+              <Stack.Screen
+                name="HomeScreen"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="NotConnected"
+                component={NotConnected}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="SignUp"
+                component={PrimaryScreen}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ALLUserDataProvider>
+      </ThirdwebProvider>
+    </GestureHandlerRootView>
   );
-};
+}
 
-const AppInner = () => {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const textStyles = {
-    color: isDarkMode ? Colors.white : Colors.black,
-    ...styles.heading,
-  };
-
-  return (
-    <View style={styles.view}>
-      <Text style={textStyles}>React Native thirdweb starter</Text>
-      <ConnectWallet />
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  view: {
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-});
-
-export default App;
