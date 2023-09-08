@@ -155,7 +155,7 @@ export default function Dashboard({ConnectedAccountUser}) {
                   : String(ConnectedAccountUser) === '2'
                   ? PathologistData[9]
                   : String(ConnectedAccountUser) === '4'
-                  ? PharmacyCompany[2]
+                  ? PharmacyCompany[8]
                   : String(ConnectedAccountUser) === '3'
                   ? MedicalResearchLab[8]
                   : String(ConnectedAccountUser) === '5'
@@ -184,7 +184,7 @@ export default function Dashboard({ConnectedAccountUser}) {
           backgroundColor:
             scheme === 'light'
               ? MyTheme.lightColors.backgroundColor
-              : MyTheme.darkcolors.background,
+              : 'rgb(32,33,36)',
           width: 310,
         },
         headerStyle: {
@@ -207,7 +207,7 @@ export default function Dashboard({ConnectedAccountUser}) {
           drawerLabel: 'Notification',
           title: 'Notification',
           drawerIcon: () => (
-            <FontAwesome name="star" size={20} color="#808080" />
+            <FontAwesome name="newspaper-o" size={20} color="#808080" />
           ),
         }}
         component={Notification}
@@ -222,7 +222,7 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'Patient Basic Information',
               title: 'Patient Basic Information',
               drawerIcon: () => (
-                <SimpleLineIcons name="home" size={20} color="#808080" />
+                <SimpleLineIcons name="info" size={20} color="#808080" />
               ),
             }}
             component={GetPersonalDetails}
@@ -390,7 +390,7 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'Patient Prescription',
               title: 'Patient Prescription',
               drawerIcon: () => (
-                <MaterialIcons name="category" size={20} color="#808080" />
+                <MaterialIcons name="image" size={20} color="#808080" />
               ),
             }}
             component={ViewPatientPrescriptionSentByDoctor}
@@ -406,7 +406,7 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'Personal Information',
               title: 'Personal Information',
               drawerIcon: () => (
-                <SimpleLineIcons name="home" size={20} color="#808080" />
+                <SimpleLineIcons name="info" size={20} color="#808080" />
               ),
             }}
             component={GetPharmacyCompanyPersonalData}
@@ -426,9 +426,9 @@ export default function Dashboard({ConnectedAccountUser}) {
             name="View Medicine"
             options={{
               drawerLabel: 'View Medicine',
-              title: 'View Medicine',
+              title: 'Medicine',
               drawerIcon: () => (
-                <MaterialIcons name="category" size={20} color="#808080" />
+                <MaterialIcons name="medical-services" size={20} color="#808080" />
               ),
             }}
             component={ViewTopMedicine}
@@ -439,7 +439,7 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'Patient Prescription',
               title: 'Patient Prescription',
               drawerIcon: () => (
-                <MaterialIcons name="category" size={20} color="#808080" />
+                <MaterialIcons name="image" size={20} color="#808080" />
               ),
             }}
             component={PatientToPharmacyCompanySharedData}
@@ -455,7 +455,7 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'Person Info',
               title: 'Person Info',
               drawerIcon: () => (
-                <SimpleLineIcons name="home" size={20} color="#808080" />
+                <SimpleLineIcons name="info" size={20} color="#808080" />
               ),
             }}
             component={GetMediResearchLabPersonalData}
@@ -466,7 +466,7 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'Add Report',
               title: 'Add Report',
               drawerIcon: () => (
-                <MaterialIcons name="timer" size={20} color="#808080" />
+                <MaterialIcons name="report" size={20} color="#808080" />
               ),
             }}
             component={AddResearchLabReport}
@@ -477,7 +477,7 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'Patient Prescription',
               title: 'Patient Prescription',
               drawerIcon: () => (
-                <MaterialIcons name="category" size={20} color="#808080" />
+                <MaterialIcons name="image" size={20} color="#808080" />
               ),
             }}
             component={PatientToMedicalResearchLabSharedData}

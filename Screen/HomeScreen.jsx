@@ -62,7 +62,7 @@ const HomeScreen = () => {
           color="rgb(108, 99, 255)"
           style={{
             flex: 1,
-            justifyContent: 'center', 
+            justifyContent: 'center',
             alignItems: 'center',
           }}
         />

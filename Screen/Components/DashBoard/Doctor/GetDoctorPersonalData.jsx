@@ -57,11 +57,11 @@ const styles = {
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 15,
+    marginBottom: 10,
   },
   text: {
-    marginBottom: 13,
-    fontSize:18
+    marginBottom: 10,
+    // fontSize:18
   },
   // label: {
   //   fontWeight: "bold",

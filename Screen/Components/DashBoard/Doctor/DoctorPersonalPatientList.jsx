@@ -66,7 +66,7 @@ const DoctorPersonalPatientList = () => {
 export default DoctorPersonalPatientList;
 const styles = {
   title: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 1,
   },

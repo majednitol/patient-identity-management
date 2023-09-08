@@ -41,8 +41,6 @@ export default function App() {
       style={{ flex: 1, backgroundColor: theme.colors.background }}>
       <ThirdwebProvider
         clientId={client_id}
-        
-        
         activeChain={Sepolia}
         supportedWallets={[
           metamaskWallet(),
