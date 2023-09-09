@@ -1,16 +1,13 @@
 import React, {useState} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, Dimensions} from 'react-native';
 import {useContract, useContractWrite} from '@thirdweb-dev/react-native';
 import {TextInput} from 'react-native-paper';
 import FileUpload from '../../File/FileUpload';
 import {contractAddress} from '../../../../constant';
-
+const screenHeight = Dimensions.get('window').height;
 const SentPrescription = () => {
   const {contract} = useContract(contractAddress);
-  useContractWrite(
-    contract,
-    'transferDataByPatient'
-  );
+  useContractWrite(contract, 'transferDataByPatient');
 
   const [userAddress, setUserAddress] = useState('');
   const [errors, setErrors] = useState({userAddress: false});
@@ -25,15 +22,14 @@ const SentPrescription = () => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ alignItems: 'center'}}>
       <TextInput
-        style={{
-          marginBottom: 0,
-          width: 360,
-          position: 'absolute',
-          top: 130,
-          right: 25,
-        }}
+       style={{
+            marginTop: screenHeight / 6,
+            width: 360,
+            marginBottom: 20,
+            marginLeft: 15,
+          }}
         mode="outlined"
         keyboardType="default"
         value={userAddress}

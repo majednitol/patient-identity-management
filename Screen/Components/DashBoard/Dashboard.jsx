@@ -35,7 +35,7 @@ import DoctorPersonalPatientList from './Doctor/DoctorPersonalPatientList';
 import GetPharmacyCompanyPersonalData from './PharmacyCompany/GetPharmacyCompanyPersonalData';
 import AddingTopMedichine from './PharmacyCompany/AddingTopMedicine';
 import ViewTopMedicine from './PharmacyCompany/ViewTopMedicine';
-import PatientToPharmacyCompanySharedData from './PharmacyCompany/PatientToPharmacyCompanySharedData';
+import PatientToPharmacyCompanySharedData from './PharmacyCompany/v';
 import {contractAddress} from '../../../constant';
 import Upload_File from './Patient/Upload_File';
 
@@ -43,6 +43,8 @@ import ProfilePicture from '../File/ProfilePicture';
 import PatientPrescription from './Doctor/PatientPrescription';
 import {Text} from 'react-native-paper';
 import Notification from '../Notification';
+import PatientAllPrescription from './PharmacyCompany/PatientAllPrescription';
+import PatientAlPrescription from './MedicalResearchLab/PatientAlPrescription';
 
 const Drawer = createDrawerNavigator();
 
@@ -157,7 +159,7 @@ export default function Dashboard({ConnectedAccountUser}) {
                   : String(ConnectedAccountUser) === '4'
                   ? PharmacyCompany[8]
                   : String(ConnectedAccountUser) === '3'
-                  ? MedicalResearchLab[8]
+                  ? MedicalResearchLab[9]
                   : String(ConnectedAccountUser) === '5'
                   ? patientData[7]
                   : null}
@@ -428,7 +430,11 @@ export default function Dashboard({ConnectedAccountUser}) {
               drawerLabel: 'View Medicine',
               title: 'Medicine',
               drawerIcon: () => (
-                <MaterialIcons name="medical-services" size={20} color="#808080" />
+                <MaterialIcons
+                  name="medical-services"
+                  size={20}
+                  color="#808080"
+                />
               ),
             }}
             component={ViewTopMedicine}
@@ -442,7 +448,7 @@ export default function Dashboard({ConnectedAccountUser}) {
                 <MaterialIcons name="image" size={20} color="#808080" />
               ),
             }}
-            component={PatientToPharmacyCompanySharedData}
+            component={PatientAllPrescription}
           />
         </>
       )}
@@ -480,7 +486,7 @@ export default function Dashboard({ConnectedAccountUser}) {
                 <MaterialIcons name="image" size={20} color="#808080" />
               ),
             }}
-            component={PatientToMedicalResearchLabSharedData}
+            component={PatientAlPrescription}
           />
           <Drawer.Screen
             name="Prescription or Report"

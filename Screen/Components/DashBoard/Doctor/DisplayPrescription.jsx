@@ -27,7 +27,16 @@ const DisplayPrescription = ({doctorData}) => {
   return (
     <Animated.View>
       {isLoading ? (
-       <ActivityIndicator/>
+        <ActivityIndicator
+          size={45}
+          animating={true}
+          color="rgb(108, 99, 255)"
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        />
       ) : patientData ? (
         <DisplayFile userData={patientData} />
       ) : null}
