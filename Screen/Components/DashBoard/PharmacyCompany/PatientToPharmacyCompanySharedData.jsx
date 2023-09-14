@@ -33,6 +33,7 @@ const PatientToPharmacyCompanySharedData = ({PharmaData}) => {
           animating={true}
           color="rgb(108, 99, 255)"
           style={{
+            marginTop:100,
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',

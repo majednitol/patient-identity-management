@@ -354,7 +354,9 @@ contract PatientIdentity {
                 );
                 doctors[useraddress].PatientToDoctor.push(msg.sender);
                 doctors[useraddress].notification.push(
-                    string.concat('Patient  has been shared all personal data')
+                    string.concat(
+                        'Patient has been shared his/her prescription'
+                    )
                 );
             } else if (
                 user0 == uint256(EntityType.MedicalResearchLab) &&

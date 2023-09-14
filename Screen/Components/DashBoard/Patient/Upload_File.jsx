@@ -1,7 +1,7 @@
 import React from 'react';
 import FileUpload from '../../File/FileUpload';
 import DisplayFile from '../../File/DisplayFile';
-import {View} from 'react-native';
+import {Dimensions, View} from 'react-native';
 import {
   useAddress,
   useContract,
@@ -9,7 +9,7 @@ import {
 } from '@thirdweb-dev/react-native';
 import {contractAddress} from '../../../../constant';
 import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
-
+const screenHeight = Dimensions.get('window').height;
 const Upload_File = () => {
   const user = useAddress();
   const {contract} = useContract(contractAddress);

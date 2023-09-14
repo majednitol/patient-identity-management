@@ -1,10 +1,7 @@
 import {
-  localWallet,
   metamaskWallet,
-  rainbowWallet,
-  coinbaseWallet,
   ThirdwebProvider,
-  trustWallet,
+  smartWallet,
 } from '@thirdweb-dev/react-native';
 
 import { Sepolia } from '@thirdweb-dev/chains';
@@ -43,11 +40,14 @@ export default function App() {
         clientId={client_id}
         activeChain={Sepolia}
         supportedWallets={[
-          metamaskWallet(),
-          rainbowWallet(),
-          coinbaseWallet(),
-          localWallet(),
-          trustWallet(),
+          smartWallet({
+            factoryAddress: '0x2e03895E3114f40eD5c3d320A38a5c85072d745C',
+            gasless: true,
+            personalWallets:
+              [
+             metamaskWallet(),
+           ],
+          }),
         ]}>
         <ALLUserDataProvider>
           <NavigationContainer
