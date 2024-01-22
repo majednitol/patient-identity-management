@@ -9,6 +9,7 @@ import {
 } from '@thirdweb-dev/react-native';
 import {contractAddress} from '../../../../constant';
 import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
+import {ActivityIndicator} from 'react-native-paper';
 const screenHeight = Dimensions.get('window').height;
 const Upload_File = () => {
   const user = useAddress();
@@ -24,7 +25,7 @@ const Upload_File = () => {
       entering={FadeInDown.springify()}
       exiting={FadeInUp.springify()}>
       <FileUpload userAddress={user} userData={patientData} />
-
+      
       {/* {console.warn(patientData)} */}
     </Animated.View>
   );

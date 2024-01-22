@@ -1,20 +1,20 @@
-import React, {useContext} from 'react';
-import {View} from 'react-native';
+import React, { useContext } from 'react';
+import { View } from 'react-native';
 import {
   useContract,
   useContractRead,
   useAddress,
 } from '@thirdweb-dev/react-native';
-import {ActivityIndicator, MD2Colors} from 'react-native-paper';
-import {contractAddress} from '../../../../constant';
-import {Card, Text} from 'react-native-paper';
+import { ActivityIndicator, MD2Colors } from 'react-native-paper';
+import { contractAddress } from '../../../../constant';
+import { Card, Text } from 'react-native-paper';
 import PersonalHealthData from './PersonalHealthData';
-import Animated, {FadeInDown, FadeInUp} from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 const GetPersonalDetails = () => {
   const user = useAddress();
-  const {contract} = useContract(contractAddress);
-  const {data: patientData, isLoading} = useContractRead(
+  const { contract } = useContract(contractAddress);
+  const { data: patientData, isLoading } = useContractRead(
     contract,
     'getPatient',
     [user],
@@ -22,8 +22,8 @@ const GetPersonalDetails = () => {
 
   return (
     <Animated.View
-      style={{marginHorizontal: 12, marginVertical: 50}}
-      entering={FadeInDown.springify()}
+      style={{ marginHorizontal: 12, marginVertical: 50 }}
+      entering={FadeInDown.duration(800)}
       exiting={FadeInUp.springify()}>
       {user ? (
         isLoading ? (
@@ -36,7 +36,7 @@ const GetPersonalDetails = () => {
             <ActivityIndicator animating={true} color={MD2Colors.blueA400} />
           </Animated.View>
         ) : (
-          <Card>
+          <Card style={{ elevation: 7 }}>
             <Card.Content>
               <Text style={styles.title}>Patient Basic Information</Text>
 
@@ -50,12 +50,13 @@ const GetPersonalDetails = () => {
           </Card>
         )
       ) : null}
+      {console.log(patientData)}
       <PersonalHealthData />
     </Animated.View>
   );
 };
 
-const CustomText = ({label, value}) => (
+const CustomText = ({ label, value }) => (
   <Text style={styles.text}>
     <Text style={styles.label}>{label}:</Text>{' '}
     <Text style={styles.boldValue}>{value}</Text>

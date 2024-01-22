@@ -1,12 +1,12 @@
-import {View, ActivityIndicator} from 'react-native';
-import React, {useState, useEffect} from 'react';
+import { View, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
 import {
   useAddress,
   useContract,
   useContractRead,
 } from '@thirdweb-dev/react-native';
-import {contractAddress} from '../../../../constant';
-import {MD2Colors, Card, Text} from 'react-native-paper';
+import { contractAddress } from '../../../../constant';
+import { MD2Colors, Card, Text } from 'react-native-paper';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 
@@ -16,8 +16,8 @@ const PersonalHealthData = () => {
   );
   const user = useAddress();
 
-  const {contract} = useContract(contractAddress);
-  const {data: patientData, isLoading} = useContractRead(
+  const { contract } = useContract(contractAddress);
+  const { data: patientData, isLoading } = useContractRead(
     contract,
     'getPatient',
     [user],
@@ -34,12 +34,12 @@ const PersonalHealthData = () => {
   }
 
   return (
-    <Animated.View style={{marginVertical: 50}}entering={FadeInDown.springify()}
-    exiting={FadeInUp.springify()}>
+    <Animated.View style={{ marginVertical: 50 }} entering={FadeInDown.springify()}
+      exiting={FadeInUp.springify()}>
       {isLoading ? (
         <ActivityIndicator animating={true} color={MD2Colors.blueA400} />
       ) : (
-        <Card>
+        <Card >
           <Card.Content>
             <CustomText
               label="Height "
@@ -76,12 +76,12 @@ const PersonalHealthData = () => {
           </Card.Content>
         </Card>
       )}
-      
+
     </Animated.View>
   );
 };
 
-const CustomText = ({label, value}) => (
+const CustomText = ({ label, value }) => (
   <Text style={styles.text}>
     <Text style={styles.label}>{label}:</Text>{' '}
     <Text style={styles.boldValue}>{value}</Text>

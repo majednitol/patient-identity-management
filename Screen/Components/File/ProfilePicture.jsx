@@ -1,30 +1,35 @@
-import React, {useState} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Alert,
-  Image,
-  Dimensions,
-} from 'react-native';
-import {
-  useContract,
-  useContractWrite,
-} from '@thirdweb-dev/react-native';
-import axios from 'axios';
-import {contractAddress} from '../../../constant';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, TouchableOpacity, Alert, Image, Dimensions } from 'react-native';
+import { useContract, useContractWrite, useStorageUpload } from '@thirdweb-dev/react-native';
+import { contractAddress } from '../../../constant';
 import * as DocumentPicker from 'expo-document-picker';
-const mime = require('mime');
-const {width, height} = Dimensions.get('window');
+import { DataContext } from '../../../context/AllUserData';
 
-const ProfilePicture = ({userData}) => {
+
+const ProfilePicture = ({ userData }) => {
+  const { mutateAsync: upload } = useStorageUpload();
+  const { setPloader } = useContext(DataContext);
+  const [ipfsFile, setIPFSFile] = useState('');
   const profilePic = userData;
-  console.log('profilePic', profilePic);
+  console.log('profilePic3', profilePic);
   const [file, setFile] = useState(null);
-  const {contract} = useContract(contractAddress);
-  const {mutateAsync: addProfilePic} = useContractWrite(
+  const { contract } = useContract(contractAddress);
+  const { mutateAsync: addProfilePic } = useContractWrite(
     contract,
     'addProfilePic',
   );
+  const showProfile = async () => {
+
+    // const response = await fetch(profilePic);
+    // const data1 = await response.json();
+    setIPFSFile(profilePic);
+  };
+  useEffect(() => {
+    if (profilePic !== null) {
+      showProfile();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profilePic]);
 
   const handleFilePick = async () => {
     try {
@@ -42,34 +47,26 @@ const ProfilePicture = ({userData}) => {
   const uploadImage = async image => {
     if (image) {
       try {
-        Alert.alert('Wait a moment for wallet confirmation');
-        const formData = new FormData();
-        formData.append('file', {
-          uri: image.uri,
-          name: image.name,
-          type: mime.getType(image.name),
+        setPloader(true);
+
+        const uploadUrl = await upload({
+          data: [file],
+          options: { uploadWithGatewayUrl: true, uploadWithoutDirectory: true },
         });
-
-        const resFile = await axios.post(
-          'https://api.pinata.cloud/pinning/pinFileToIPFS',
-          formData,
-          {
-            headers: {
-              pinata_api_key: '752553477556da356e27',
-              pinata_secret_api_key:
-                '4c58ebd75a2eb12433ed51d396bd349ee0e7d21d0942596e52b2bda6405c9987',
-              'Content-Type': 'multipart/form-data',
-            },
-          },
-        );
-
-        const imgHash = `ipfs://${resFile.data.IpfsHash}`;
-        await addProfilePic({args: [imgHash]});
+        const response = await fetch(uploadUrl);
+        const data1 = await response.json();
+        // setIPFSFile(data1.uri);
+        //console.log('uploadUrl', data1.uri);
+        // const imgHash = `ipfs://${resFile.data.IpfsHash}`;
+        await addProfilePic({ args: [data1.uri] });
+        setPloader(false);
         Alert.alert('Successfully set profile pic');
 
         setFile(null);
       } catch (error) {
+
         console.error('Error uploading image to Pinata:', error);
+        setPloader(false);
         Alert.alert('Unable to set profile pic');
       }
     } else {
@@ -83,26 +80,26 @@ const ProfilePicture = ({userData}) => {
         <TouchableOpacity onPress={handleFilePick}>
           {file ? (
             <Image
-              source={{uri: file.uri}}
-              style={{height: 130, width: 130, borderRadius: 65}}
+              source={{ uri: file.uri }}
+              style={{ height: 130, width: 130, borderRadius: 65 }}
             />
           ) : profilePic == '' ? (
             <Image
               source={require('../../../assets/icon.png')}
-              style={{height: 130, width: 130, borderRadius: 65}}
+              style={{ height: 130, width: 130, borderRadius: 65 }}
             />
           ) : (
-            <Image
+            ipfsFile === null ? setPloader(true) : <Image
               source={{
-                uri: `https://lavender-civil-tick-210.mypinata.cloud/ipfs${profilePic?.substring(
-                  6,
-                )}`,
+                uri: 'https://lavender-civil-tick-210.mypinata.cloud/ipfs/QmVrJb1wihBogaJVrQFcwSg5hBvnWdmBTT8ADusdgovcgz?_gl=1*1uxqawh*_ga*MTEyNTIxOTQ1Ny4xNjkzNjM3ODM5*_ga_5RMPXG14TE*MTcwMDQwMzUyNC41LjEuMTcwMDQwMzY4MS42MC4wLjA.',
               }}
-              style={{height: 130, width: 130, borderRadius: 65}}
+              style={{ height: 130, width: 130, borderRadius: 65 }}
               resizeMode="contain"
             />
           )}
         </TouchableOpacity>
+
+        {console.log('ipfs', ipfsFile)}
       </View>
     </View>
   );

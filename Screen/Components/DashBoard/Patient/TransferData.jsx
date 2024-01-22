@@ -41,7 +41,7 @@ const TransferData = () => {
   };
 
   return (
-    <Animated.View entering={FadeInDown.springify()}
+    <Animated.View entering={FadeInDown.duration(800)}
     exiting={FadeInUp.springify()}>
       <View style={{marginHorizontal: 20, marginTop: 250}}>
         <TextInput

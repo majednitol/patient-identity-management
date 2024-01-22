@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ActivityIndicator, Card, MD2Colors, Text} from 'react-native-paper';
 import {
@@ -8,7 +8,7 @@ import {
   useContractRead,
 } from '@thirdweb-dev/react-native';
 import {contractAddress} from '../../constant';
-import Animated from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Notification() {
@@ -56,7 +56,9 @@ export default function Notification() {
   }, [isLoading, ConnectedAccountUser, patientData, doctorData, PathologistData, MedicalResearchLab, PharmacyCompany]);
 
   return (
-    <ScrollView style={{marginHorizontal:10, marginVertical:10}}>
+    <ScrollView style={{marginHorizontal:10, marginVertical:10}} >
+      <Animated.View entering={FadeInDown.duration(800)}
+      exiting={FadeInUp.springify()}>
       {isLoading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator
@@ -83,7 +85,8 @@ export default function Notification() {
             <Text style={styles.title}>You don't have any notification</Text>
           </Card.Content>
         </Card>
-      )}
+        )}
+        </Animated.View>
     </ScrollView>
   );
 }

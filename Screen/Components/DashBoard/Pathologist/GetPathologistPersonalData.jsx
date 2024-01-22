@@ -1,42 +1,15 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from 'react-native';
+import React from 'react';
 import { useAddress, useContract, useContractRead } from '@thirdweb-dev/react-native';
 import { contractAddress } from '../../../../constant';
-import { ActivityIndicator, Card, MD2Colors } from "react-native-paper";
+import { ActivityIndicator, Card, MD2Colors } from 'react-native-paper';
 const GetPathologistPersonalData = () => {
-  const user = useAddress()
+  const user = useAddress();
 
   const { contract } = useContract(contractAddress);
-  const { data: PathologistData, isLoading } = useContractRead(contract, "getPathologist", [user])
+  const { data: PathologistData, isLoading } = useContractRead(contract, 'getPathologist', [user]);
 
   return (
-
-    // <View>
-    //   {user ? isLoading ? <ActivityIndicator animating={true} color={MD2Colors.blueA400} /> : <Text>
-
-    //     <Text> Pathologist Personal Information</Text>
-    //     <Text>  Account: {PathologistData[0]}</Text>
-
-    //     <Text>PathologistID: {String(PathologistData[1])}</Text>
-
-    //     <Text>
-    //       Pathologist Name: {PathologistData[2]}
-    //     </Text>
-
-    //     <Text>
-    //       licenseNumber: {String(PathologistData[3])}
-    //     </Text>
-    //     Specialization Area: {PathologistData[4]}
-    //     <Text>
-    //       totalExperience : {String(PathologistData[5])}
-    //     </Text>
-
-
-
-
-    //   </Text> : null}
-    // </View>
-
     <View style={{ marginHorizontal: 12, marginVertical: 50 }}>
       {isLoading ? (
         <ActivityIndicator animating={true} color={MD2Colors.blueA400} />
@@ -45,7 +18,7 @@ const GetPathologistPersonalData = () => {
           <Card.Content>
             <Text style={styles.title}>Pathologist Personal Information</Text>
             <CustomText label="Account " value={PathologistData[0]} />
-            <CustomText label="PathologistID"  value={String(PathologistData[1])} />
+            <CustomText label="PathologistID" value={String(PathologistData[1])} />
             <CustomText label="Pathologist Name" value={PathologistData[2]} />
             <CustomText label="licenseNumber" value={String(PathologistData[3])} />
             <CustomText label="Specialization Area" value={PathologistData[4]} />
@@ -53,15 +26,15 @@ const GetPathologistPersonalData = () => {
               label="totalExperience"
               value={String(PathologistData[5])}
             />
-            
+
           </Card.Content>
         </Card>
       )}
     </View>
   );
-}
+};
 
-export default GetPathologistPersonalData
+export default GetPathologistPersonalData;
 
 const CustomText = ({ label, value }) => (
   <Text style={styles.text}>

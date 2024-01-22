@@ -22,14 +22,14 @@ const SentPrescription = () => {
   };
 
   return (
-    <View style={{ alignItems: 'center'}}>
+    <View style={{flex: 1, }}>
       <TextInput
-       style={{
-            marginTop: screenHeight / 6,
-            width: 360,
-            marginBottom: 20,
-            marginLeft: 15,
-          }}
+        style={{
+          width: 360,
+          marginTop: screenHeight / 8,
+          marginBottom:20,
+          marginLeft: 15,
+        }}
         mode="outlined"
         keyboardType="default"
         value={userAddress}
@@ -38,13 +38,7 @@ const SentPrescription = () => {
         label="Enter  userAddress"
       />
       {errors.userAddress && <Text style={{color: 'red'}}>Field required</Text>}
-
-      <View
-        style={{
-          marginTop: 190,
-        }}>
-        <FileUpload userAddress={userAddress} />
-      </View>
+      <FileUpload userAddress={userAddress} />
     </View>
   );
 };

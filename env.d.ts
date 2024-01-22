@@ -5,3 +5,4 @@ declare module '@env' {
 
   // Add other variables here
 }
+// "@thirdweb-dev/react-native": "^0.0.0-dev-eff9b53-20230906201631",

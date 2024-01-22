@@ -1,32 +1,29 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/react-in-jsx-scope */
 import 'react-native-gesture-handler';
-import {StatusBar, View, useColorScheme} from 'react-native';
-import {SimpleLineIcons, MaterialIcons, FontAwesome} from '@expo/vector-icons';
+import { StatusBar, View, useColorScheme } from 'react-native';
+import { SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import {
   ConnectWallet,
   useAddress,
   useContract,
   useContractRead,
 } from '@thirdweb-dev/react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {DarkTheme, DefaultTheme} from '@react-navigation/native';
-import {DrawerItemList, createDrawerNavigator} from '@react-navigation/drawer';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { DarkTheme, DefaultTheme } from '@react-navigation/native';
+import { DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 
 import GetPersonalDetails from './Patient/GetPersonalDetails';
-import PersonalHealthData from './Patient/PersonalHealthData';
 import SetPersonalHealthData from './Patient/SetPersonalHealthData';
 import Prescription from './Patient/Prescription';
 import TransferData from './Patient/TransferData';
 
 import PatientPersonalDoctors from './Patient/PatientPersonalDoctors';
-import Wellcome from '../Notification';
 import GetPathologistPersonalData from './Pathologist/GetPathologistPersonalData';
 import SentTestReportToDoctor from './Pathologist/SentTestReportToDoctor';
 import ViewPatientPrescriptionSentByDoctor from './Pathologist/ViewPatientPrescriptionSentByDoctor';
 import GetMediResearchLabPersonalData from './MedicalResearchLab/GetMediResearchLabPersonalData';
 import AddResearchLabReport from './MedicalResearchLab/AddResearchLabResport';
-import PatientToMedicalResearchLabSharedData from './MedicalResearchLab/PatientToMedicalResearchLab';
 import ViewPrescriptionOrLabReport from './MedicalResearchLab/ViewPrescriptionOrLabReport';
 import GetDoctorPersonalData from './Doctor/GetDoctorPersonalData';
 import SentPrescription from './Doctor/SentPrescription';
@@ -35,34 +32,36 @@ import DoctorPersonalPatientList from './Doctor/DoctorPersonalPatientList';
 import GetPharmacyCompanyPersonalData from './PharmacyCompany/GetPharmacyCompanyPersonalData';
 import AddingTopMedichine from './PharmacyCompany/AddingTopMedicine';
 import ViewTopMedicine from './PharmacyCompany/ViewTopMedicine';
-import PatientToPharmacyCompanySharedData from './PharmacyCompany/v';
-import {contractAddress} from '../../../constant';
+import { contractAddress } from '../../../constant';
 import Upload_File from './Patient/Upload_File';
 
 import ProfilePicture from '../File/ProfilePicture';
 import PatientPrescription from './Doctor/PatientPrescription';
-import {Text} from 'react-native-paper';
+import { ActivityIndicator, Text } from 'react-native-paper';
 import Notification from '../Notification';
 import PatientAllPrescription from './PharmacyCompany/PatientAllPrescription';
 import PatientAlPrescription from './MedicalResearchLab/PatientAlPrescription';
+import { useContext } from 'react';
+import { DataContext } from '../../../context/AllUserData';
 
 const Drawer = createDrawerNavigator();
 
-export default function Dashboard({ConnectedAccountUser}) {
+export default function Dashboard({ ConnectedAccountUser }) {
+  const { ploader, setPloader } = useContext(DataContext);
   const user = useAddress();
-  const {contract, isLoading} = useContract(contractAddress);
-  const {data: patientData} = useContractRead(contract, 'getPatient', [user]);
+  const { contract, isLoading } = useContract(contractAddress);
+  const { data: patientData } = useContractRead(contract, 'getPatient', [user]);
 
-  const {data: doctorData} = useContractRead(contract, 'getDoctor', [user]);
-  const {data: MedicalResearchLab} = useContractRead(
+  const { data: doctorData } = useContractRead(contract, 'getDoctor', [user]);
+  const { data: MedicalResearchLab } = useContractRead(
     contract,
     'getMedicalResearchLab',
     [user],
   );
-  const {data: PathologistData} = useContractRead(contract, 'getPathologist', [
+  const { data: PathologistData } = useContractRead(contract, 'getPathologist', [
     user,
   ]);
-  const {data: PharmacyCompany} = useContractRead(
+  const { data: PharmacyCompany } = useContractRead(
     contract,
     'getPharmacyCompany',
     [user],
@@ -71,7 +70,7 @@ export default function Dashboard({ConnectedAccountUser}) {
 
   const scheme = useColorScheme();
   StatusBar.setBackgroundColor('rgb(108, 99, 255)');
-  const theme = scheme === 'dark' ? DarkTheme : DefaultTheme;
+
   const MyTheme = {
     dark: false,
     darkcolors: {
@@ -110,9 +109,10 @@ export default function Dashboard({ConnectedAccountUser}) {
                 alignItems: 'center',
                 borderBottomColor: '#f4f4f4',
                 borderBottomWidth: 1,
+                position: 'relative',
               }}>
               {isLoading || user == null ? (
-                console.log('loading')
+                <ActivityIndicator size={50} />
               ) : String(ConnectedAccountUser) === '1' ? (
                 <ProfilePicture userData={doctorData[12]} />
               ) : String(ConnectedAccountUser) === '2' ? (
@@ -124,7 +124,12 @@ export default function Dashboard({ConnectedAccountUser}) {
               ) : String(ConnectedAccountUser) === '5' ? (
                 <ProfilePicture userData={patientData[11]} />
               ) : null}
-
+              {ploader ? (
+                <ActivityIndicator
+                  size={50}
+                  style={{ position: 'absolute', top: -5 }}
+                />
+              ) : null}
               <Text
                 style={{
                   fontSize: 22,
@@ -138,31 +143,31 @@ export default function Dashboard({ConnectedAccountUser}) {
                 {isLoading || user == null
                   ? console.log('object')
                   : String(ConnectedAccountUser) === '1'
-                  ? doctorData[2]
-                  : String(ConnectedAccountUser) === '2'
-                  ? PathologistData[2]
-                  : String(ConnectedAccountUser) === '4'
-                  ? PharmacyCompany[2]
-                  : String(ConnectedAccountUser) === '3'
-                  ? MedicalResearchLab[2]
-                  : String(ConnectedAccountUser) === '5'
-                  ? patientData[2]
-                  : null}
+                    ? doctorData[2]
+                    : String(ConnectedAccountUser) === '2'
+                      ? PathologistData[2]
+                      : String(ConnectedAccountUser) === '4'
+                        ? PharmacyCompany[2]
+                        : String(ConnectedAccountUser) === '3'
+                          ? MedicalResearchLab[2]
+                          : String(ConnectedAccountUser) === '5'
+                            ? patientData[2]
+                            : null}
               </Text>
-              <Text style={{marginBottom: 2}}>
+              <Text style={{ marginBottom: 2 }}>
                 {isLoading || user == null
                   ? console.log('object')
                   : String(ConnectedAccountUser) === '1'
-                  ? doctorData[11]
-                  : String(ConnectedAccountUser) === '2'
-                  ? PathologistData[9]
-                  : String(ConnectedAccountUser) === '4'
-                  ? PharmacyCompany[8]
-                  : String(ConnectedAccountUser) === '3'
-                  ? MedicalResearchLab[9]
-                  : String(ConnectedAccountUser) === '5'
-                  ? patientData[7]
-                  : null}
+                    ? doctorData[11]
+                    : String(ConnectedAccountUser) === '2'
+                      ? PathologistData[9]
+                      : String(ConnectedAccountUser) === '4'
+                        ? PharmacyCompany[8]
+                        : String(ConnectedAccountUser) === '3'
+                          ? MedicalResearchLab[9]
+                          : String(ConnectedAccountUser) === '5'
+                            ? patientData[7]
+                            : null}
               </Text>
               <View
                 style={{

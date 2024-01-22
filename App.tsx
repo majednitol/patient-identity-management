@@ -1,7 +1,7 @@
 import {
-  metamaskWallet,
+
   ThirdwebProvider,
-  smartWallet,
+  metamaskWallet,
 } from '@thirdweb-dev/react-native';
 
 import { Sepolia } from '@thirdweb-dev/chains';
@@ -32,7 +32,10 @@ const Stack = createStackNavigator();
 export default function App() {
   const scheme = useColorScheme();
   const theme = useTheme();
-
+//   const config = {
+//     factoryAddress: '0x2e03895E3114f40eD5c3d320A38a5c85072d745C',
+//     gasless: true,
+// };
   return (
     <GestureHandlerRootView
       style={{ flex: 1, backgroundColor: theme.colors.background }}>
@@ -40,15 +43,10 @@ export default function App() {
         clientId={client_id}
         activeChain={Sepolia}
         supportedWallets={[
-          smartWallet({
-            factoryAddress: '0x2e03895E3114f40eD5c3d320A38a5c85072d745C',
-            gasless: true,
-            personalWallets:
-              [
-             metamaskWallet(),
-           ],
-          }),
-        ]}>
+          // smartWallet(embeddedWallet({oauthOptions:{providers:['google'],redirectUrl:'myapp://'}}),config),
+          metamaskWallet(),
+]}
+        >
         <ALLUserDataProvider>
           <NavigationContainer
             theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>

@@ -18,6 +18,7 @@ const NotConnected = () => {
           resizeMode: 'cover',
         }}
       />
+      
     </View>
   );
 };

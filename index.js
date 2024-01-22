@@ -20,7 +20,7 @@ export default function Main() {
     ...MD3DarkTheme,
     colors: {
       ...MD3LightTheme.colors,
-      primary: 'rgb(108, 99, 255)', 
+      primary: 'rgb(108, 99, 255)',
       // Change text color
     },
   };
@@ -28,7 +28,7 @@ export default function Main() {
     ...MD3DarkTheme,
     colors: {
       ...MD3DarkTheme.colors,
-      primary: 'rgb(108, 99, 255)', 
+      primary: 'rgb(108, 99, 255)',
     },
   };
   return (

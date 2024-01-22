@@ -1,18 +1,18 @@
-import { View } from 'react-native'
-import React from 'react'
+import { View } from 'react-native';
+import React from 'react';
 import { useAddress, useContract, useContractRead } from '@thirdweb-dev/react-native';
 import { contractAddress } from '../../../../constant';
-import { ActivityIndicator, Card, MD2Colors ,Text} from "react-native-paper";
+import { ActivityIndicator, Card, MD2Colors, Text } from 'react-native-paper';
 const GetMediResearchLabPersonalData = () => {
-  const user = useAddress()
+  const user = useAddress();
 
   const { contract } = useContract(contractAddress);
-  const { data: MedicalResearchLab, isLoading } = useContractRead(contract, "getMedicalResearchLab", [user])
+  const { data: MedicalResearchLab, isLoading } = useContractRead(contract, 'getMedicalResearchLab', [user]);
 
   return (
 
-   
-<View style={{ marginHorizontal: 12, marginVertical: 50 }}>
+
+    <View style={{ marginHorizontal: 12, marginVertical: 50 }}>
       {isLoading ? (
         <ActivityIndicator animating={true} color={MD2Colors.blueA400} />
       ) : (
@@ -28,15 +28,15 @@ const GetMediResearchLabPersonalData = () => {
               label="Lab Rating"
               value={String(MedicalResearchLab[5])}
             />
-           
+
           </Card.Content>
         </Card>
       )}
     </View>
   );
-}
+};
 
-export default GetMediResearchLabPersonalData
+export default GetMediResearchLabPersonalData;
 
 
 const CustomText = ({ label, value }) => (

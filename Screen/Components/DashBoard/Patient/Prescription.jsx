@@ -8,6 +8,7 @@ import {
   useContractRead,
 } from '@thirdweb-dev/react-native';
 import {contractAddress} from '../../../../constant';
+import Animated, {FadeInLeft, FadeInUp} from 'react-native-reanimated';
 
 const Prescription = () => {
   const user = useAddress();
@@ -18,10 +19,9 @@ const Prescription = () => {
     [user],
   );
   return (
-    <View>
+    <Animated.View>
       <DisplayFile userData={patientData} />
-      {/* {console.warn(patientData)} */}
-    </View>
+    </Animated.View>
   );
 };
 

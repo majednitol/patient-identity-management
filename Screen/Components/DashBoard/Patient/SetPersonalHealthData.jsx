@@ -1,13 +1,14 @@
-import React, {useState} from 'react';
-import { View, Text} from 'react-native';
-import {TextInput, Button} from 'react-native-paper';
-import {useContract, useContractWrite} from '@thirdweb-dev/react-native';
-import {contractAddress} from '../../../../constant';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
+import { useContract, useContractWrite } from '@thirdweb-dev/react-native';
+import { contractAddress } from '../../../../constant';
 import { ScrollView } from 'react-native-gesture-handler';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 const SetPersonalHealthData = () => {
-  const {contract} = useContract(contractAddress);
-  const {mutateAsync: setPatientPersonalData, isLoading} = useContractWrite(
+  const { contract } = useContract(contractAddress);
+  const { mutateAsync: setPatientPersonalData, isLoading } = useContractWrite(
     contract,
     'setPatientPersonalData',
   );
@@ -89,10 +90,11 @@ const SetPersonalHealthData = () => {
 
   return (
     <ScrollView>
-      {/* Your custom patient input form */}
-      <View View style={{marginHorizontal: 16}}>
+
+      <Animated.View entering={FadeInDown.duration(800)}
+        exiting={FadeInUp.springify()} style={{ marginHorizontal: 16 }}>
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="numeric"
           value={height}
@@ -100,10 +102,10 @@ const SetPersonalHealthData = () => {
           onChangeText={value => handleInputChange('height', value)}
           label="Enter your height"
         />
-        {errors.height && <Text style={{color: 'red'}}>Field required</Text>}
+        {errors.height && <Text style={{ color: 'red' }}>Field required</Text>}
 
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="default"
           value={previousDiseases}
@@ -112,11 +114,11 @@ const SetPersonalHealthData = () => {
           label="Enter your previousDiseases"
         />
         {errors.previousDiseases && (
-          <Text style={{color: 'red'}}>Field required</Text>
+          <Text style={{ color: 'red' }}>Field required</Text>
         )}
 
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="default"
           value={badHabits}
@@ -124,10 +126,10 @@ const SetPersonalHealthData = () => {
           onChangeText={value => handleInputChange('badHabits', value)}
           label="Enter your badHabits"
         />
-        {errors.badHabits && <Text style={{color: 'red'}}>Field required</Text>}
+        {errors.badHabits && <Text style={{ color: 'red' }}>Field required</Text>}
 
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="default"
           value={bloodGroup}
@@ -136,11 +138,11 @@ const SetPersonalHealthData = () => {
           label="Enter your bloodGroup"
         />
         {errors.bloodGroup && (
-          <Text style={{color: 'red'}}>Field required</Text>
+          <Text style={{ color: 'red' }}>Field required</Text>
         )}
 
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="default"
           value={medicineDrugs}
@@ -149,10 +151,10 @@ const SetPersonalHealthData = () => {
           label="Enter your medicineDrugs"
         />
         {errors.medicineDrugs && (
-          <Text style={{color: 'red'}}>Field required</Text>
+          <Text style={{ color: 'red' }}>Field required</Text>
         )}
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="default"
           value={chronicDiseases}
@@ -161,11 +163,11 @@ const SetPersonalHealthData = () => {
           label="Enter your chronicDiseases"
         />
         {errors.chronicDiseases && (
-          <Text style={{color: 'red'}}>Field required</Text>
+          <Text style={{ color: 'red' }}>Field required</Text>
         )}
 
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="default"
           value={healthAllergies}
@@ -174,10 +176,10 @@ const SetPersonalHealthData = () => {
           label="Enter your healthAllergies"
         />
         {errors.birthDefects && (
-          <Text style={{color: 'red'}}>Field required</Text>
+          <Text style={{ color: 'red' }}>Field required</Text>
         )}
         <TextInput
-          style={{marginVertical: 10}}
+          style={{ marginVertical: 10 }}
           mode="outlined"
           keyboardType="default"
           value={birthDefects}
@@ -186,22 +188,24 @@ const SetPersonalHealthData = () => {
           label="Enter your birthDefects"
         />
         {errors.birthDefects && (
-          <Text style={{color: 'red'}}>Field required</Text>
+          <Text style={{ color: 'red' }}>Field required</Text>
         )}
-        <Button
-          style={{
-            marginVertical: 30,
-            marginHorizontal: 50,
-            backgroundColor: 'rgb(108, 99, 255)', // Background color
-          }}
-          onPress={handleSubmit}
-          mode="contained"
-          labelStyle={{color: 'white'}} // Text color
-        >
-          {/* Your custom button component */}
-          Submit
-        </Button>
-      </View>
+        <TouchableOpacity>
+          <Button
+            style={{
+              marginVertical: 30,
+              marginHorizontal: 50,
+              backgroundColor: 'rgb(108, 99, 255)', // Background color
+            }}
+            onPress={handleSubmit}
+            mode="contained"
+            labelStyle={{ color: 'white' }} // Text color
+          >
+
+            Submit
+          </Button>
+        </TouchableOpacity>
+      </Animated.View>
     </ScrollView>
   );
 };
